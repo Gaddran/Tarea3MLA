@@ -168,6 +168,7 @@ adjusted_r2_IPSA = 1 - ((1 - r2_IPSA) * (n - 1)) / (n - p - 1)
 
 print(f"Mean Absolute Error (MAE): {mae_IPSA:.1f}")
 print(f"Mean Squared Error (MSE): {mse_IPSA:.1f}")
+print(f"Root Mean Squared Error (RMSE): {mse_IPSA**0.5:.1f}")
 print(f"R² ajustado: {adjusted_r2_IPSA:.3f}")
 
 
@@ -185,5 +186,6 @@ for i in range(n_meses):
 
 
 plt.plot(np.concat((predicciones,last_data[0])), label='Predicho')
+plt.plot((predicciones), label='Predicho')
 
 
