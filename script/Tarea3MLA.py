@@ -286,7 +286,7 @@ df_leche.plot(y='Produccion', title='Producción de leche entre 1962 y 1974', ro
 
 # ### Elección de parametros y diseño del modelo 
 
-retrasos = 8 #Numero de columnas de retrazo a crear
+retrasos = 7 #Numero de columnas de retrazo a crear
 
 for i in range(1, retrasos + 1):
     df_leche[f'lag_{i}'] = df_leche['Escalado'].shift(i)
@@ -307,7 +307,7 @@ X_leche = X_leche.reshape((X_leche.shape[0], X_leche.shape[1], 1))
 
 # Se separan los datos en entrenamiento y testeo
 
-X_leche_train, X_leche_test, y_leche_train, y_leche_test = train_test_split(X_leche, y_leche, test_size=0.3, shuffle=False) #Shuffle false es importante para mantener el orden de la serie de tiempo
+X_leche_train, X_leche_test, y_leche_train, y_leche_test = train_test_split(X_leche, y_leche, test_size=0.3, shuffle=False, random_state=123) #Shuffle false es importante para mantener el orden de la serie de tiempo
 
 
 # Diseñamos la arquitectura del modelo; en este caso, es un modelo LSTM simple.  
@@ -316,6 +316,7 @@ X_leche_train, X_leche_test, y_leche_train, y_leche_test = train_test_split(X_le
 # Crear el LSTM modelo
 model = Sequential()
 model.add(Input((X_leche_train.shape[1], 1)))
+model.add(LSTM(units=500, activation='relu', return_sequences=True))
 model.add(LSTM(units=500, activation='relu', return_sequences=False))
 model.add(Dense(units=1))
 
